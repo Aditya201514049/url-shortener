@@ -15,6 +15,7 @@ app.use("/api", urlRoutes);
 
 app.get("/:shortCode", urlController.handleRedirect);
 
+// test route
 app.get("/", (req, res) => {
   res.send("API is running");
 });
