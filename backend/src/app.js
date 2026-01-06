@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/auth.routes.js";
-import urlRoutes from "./routes/url.routes.js"; // <-- add this
+import urlRoutes from "./routes/url.routes.js"; 
 import * as urlController from "./controllers/url.controller.js";
 
 const app = express();
@@ -11,7 +11,7 @@ app.use(express.json());
 
 // routes
 app.use("/api/auth", authRoutes);
-app.use("/api", urlRoutes); // <-- mount URL routes, gives /api/urls, /api/urls/:id
+app.use("/api", urlRoutes); 
 
 app.get("/:shortCode", urlController.handleRedirect);
 
