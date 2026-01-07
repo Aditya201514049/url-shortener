@@ -1,4 +1,4 @@
-import { createUser, validateUser } from "../services/auth.service.js";
+import { createUser, getUserById, validateUser } from "../services/auth.service.js";
 import { generateToken } from "../utils/token.js";
 
 export const register = async (req, res) => {
@@ -10,6 +10,16 @@ export const register = async (req, res) => {
     res
       .status(201)
       .json({ token, user: { id: user.id, email: user.email, name: user.name } });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export const me = async (req, res) => {
+  try {
+    const user = await getUserById(req.user.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json({ user: { id: user.id, email: user.email, name: user.name } });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

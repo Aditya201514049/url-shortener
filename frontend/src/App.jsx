@@ -5,11 +5,25 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
 import HomePage from "./pages/HomePage";
+import Loader from "./components/Loader";
 
 // ProtectedRoute Component
 function ProtectedRoute({ children }) {
-  const { isAuthenticated } = useAuthContext();
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  const { isAuthenticated, isInitializing } = useAuthContext();
+  if (isInitializing) return <Loader />;
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
+}
+
+function GuestRoute({ children }) {
+  const { isAuthenticated, isInitializing } = useAuthContext();
+  if (isInitializing) return <Loader />;
+  return !isAuthenticated ? children : <Navigate to="/dashboard" replace />;
+}
+
+function HomeRoute() {
+  const { isAuthenticated, isInitializing } = useAuthContext();
+  if (isInitializing) return <Loader />;
+  return isAuthenticated ? <Navigate to="/dashboard" replace /> : <HomePage />;
 }
 
 export default function App() {
@@ -17,9 +31,17 @@ export default function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/" element={<HomeRoute />} />
+          <Route path="/login" element={
+            <GuestRoute>
+              <LoginPage />
+            </GuestRoute>
+          } />
+          <Route path="/register" element={
+            <GuestRoute>
+              <RegisterPage />
+            </GuestRoute>
+          } />
           <Route path="/dashboard" element={
             <ProtectedRoute>
               <DashboardPage />

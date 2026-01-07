@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuthContext } from "../contexts/AuthContext";
 
 const API_URL = import.meta.env.VITE_API_URL; // Adjust API base if needed
 
@@ -9,7 +8,6 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { login } = useAuthContext();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -23,7 +21,6 @@ export default function RegisterPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Registration failed");
-      login(data.token); // Automatically login after register
       navigate("/login");
     } catch (err) {
       setError(err.message);

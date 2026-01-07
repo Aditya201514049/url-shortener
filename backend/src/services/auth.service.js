@@ -15,6 +15,11 @@ export const createUser = async (email, password, name) => {
   return user;
 };
 
+export const getUserById = async (id) => {
+  const user = await prisma.user.findUnique({ where: { id } });
+  return user;
+};
+
 export const validateUser = async (email, password) => {
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) throw new Error("Invalid credentials");
