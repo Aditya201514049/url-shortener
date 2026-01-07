@@ -32,8 +32,8 @@ export default function UrlCard({ url, onDelete, isDeleting }) {
           <div
             className={
               isExpanded
-                ? "break-words text-sm font-medium text-gray-900"
-                : "truncate text-sm font-medium text-gray-900"
+                ? "break-all text-sm font-medium text-gray-900"
+                : "max-w-[520px] truncate text-sm font-medium text-gray-900"
             }
             title={url.original}
           >
