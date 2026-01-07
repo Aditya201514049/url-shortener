@@ -3,7 +3,7 @@ import cors from "cors";
 import authRoutes from "./routes/auth.routes.js";
 import urlRoutes from "./routes/url.routes.js"; 
 import * as urlController from "./controllers/url.controller.js";
-import cors from "cors";
+
 
 const app = express();
 

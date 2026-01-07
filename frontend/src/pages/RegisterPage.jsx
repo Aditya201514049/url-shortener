@@ -24,7 +24,7 @@ export default function RegisterPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Registration failed");
       login(data.token); // Automatically login after register
-      navigate("/dashboard");
+      navigate("/login");
     } catch (err) {
       setError(err.message);
     }
